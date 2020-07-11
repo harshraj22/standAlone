@@ -1,5 +1,5 @@
 const url = 'http://127.0.0.1:5000/get_description/'
-let currentState = 'N', currentDir = 'N', dirs = 'WNESW';
+let currentState = 'N', currentDir = 'N', dirs = 'WNESW', movementAllowed = true;
 let backDir = {
 	'N': 'S',
 	'E': 'W',
@@ -9,6 +9,8 @@ let backDir = {
 
 let tag = document.getElementById('description');
 let facing = document.getElementById('facing');
+let breakpoint = document.getElementById('breakpoint');
+let image = document.getElementById('img-view');
 
 let index = 0;
 
@@ -19,7 +21,10 @@ function getData(direction=currentState) {
 	fetch(new_url).then(response => response.json()).then((data)=>{
 		tag.innerHTML = data['description'];
 		facing.innerHTML = currentDir;
-		console.log(data['description']);
+		breakpoint.innerHTML = currentState;
+		movementAllowed = data['movementAllowed'];
+		image.src = data['image']
+		console.log(data);
 	}).catch((err)=> { console.log(err); });
 };
 
@@ -48,6 +53,10 @@ document.onkeydown = function (e) {
             console.log('ArrowRight');
             break;
         case 'Enter':
+        	if (!movementAllowed) {
+        		alert('Cant go there !!');
+        		break;
+        	}
         	if (currentState.length > 1) {
         		if (currentState.slice(-1) === backDir[currentDir])
         			currentState = currentState.substring(0, currentState.length-1);
