@@ -20,19 +20,12 @@ def get_description(dir):
 			'movementAllowed': response['movementAllowed']
 		})
 
-	if dir == 'NEES':
-		return jsonify({'description': f'The detailed description about {dir}', 'movementAllowed': False})
-	return jsonify({'description': f'The detailed description about {dir}', 'movementAllowed': True})
 
 @app.route('/get_image/<image_name>')
 def get_image(image_name):
-	filename = image_name
+	filename = 'images/' + image_name
 	print(f'name is: {image_name} \n\n\n')
 	return send_file(filename, mimetype='image/gif')
-
-@app.route('/get_data')
-def get_data():
-	return jsonify({'name': 'new name'})
 
 if __name__ == '__main__':
 	with open('breakpoints.json', 'r') as f:
