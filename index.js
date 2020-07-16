@@ -39,7 +39,7 @@ function getData(direction=currentState) {
 		facing.innerHTML = currentDir;
 		breakpoint.innerHTML = currentState;
 		movementAllowed = data['movementAllowed'];
-		image.src = base_url + '/get_image/' + data['image']
+		image.src = base_url + 'get_image/' + data['image']
 		console.log(data);
 	}).catch((err)=> { console.log(err); });
 };
